@@ -3,21 +3,22 @@ def decompose(n)
   sqs_arr = [[n-1],[n-2],[n-3]]
   sqs_arr.each_with_index do |arr,idx|
     if sqs_sum(arr) == n**2
-      completed_squares << arr
+      return arr.sort
+      #completed_squares << arr
     elsif sqs_sum(arr) > n**2
       sqs_arr.delete_at(idx)
     else
       i = arr[-1]-1
       while i > 0 do
         if sqs_sum([arr,i].flatten ) <= n**2
-          if i >=1
-            sqs_arr.append([arr,i].flatten)
+          if i-2 >=1
+            sqs_arr.insert(idx+1,([arr,i-2].flatten))
           end
           if i-1 >=1
-            sqs_arr.append([arr,i-1].flatten)
+            sqs_arr.insert(idx+1,([arr,i-1].flatten))
           end
-          if i-2 >=1
-            sqs_arr.append([arr,i-2].flatten)
+          if i >=1
+            sqs_arr.insert(idx+1,([arr,i].flatten))
           end
           i=0
         end
@@ -25,7 +26,11 @@ def decompose(n)
       end
     end
   end
-  return completed_squares.sort{|a,b| b[0]<=>a[0]}[0].reverse
+  if completed_squares.empty?
+    return nil
+  else
+    return completed_squares.sort{|a,b| b[0]<=>a[0]}[0].reverse
+  end
 end
 
 def sqs_sum(arr)
