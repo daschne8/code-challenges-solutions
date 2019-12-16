@@ -4,8 +4,7 @@ def tickets(people)
      if per == 25
        bills.append(per)
       else
-      puts "cout down, per #{per}, bills #{bills}"
-       test = countDown(per,bills)
+       test = countDown(per,bills.sort)
        if test
          bills = test
        else
